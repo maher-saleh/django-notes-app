@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-5">Login to SmartNotes!</h1>
+<p>For demo purpose please use:<br />
+    username: admin<br />
+    password: admin
+</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Login">
+</form>
+{% endblock %}
