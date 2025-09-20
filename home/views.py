@@ -9,7 +9,10 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 from django.contrib.auth import login
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
+@method_decorator(csrf_exempt, name='dispatch')
 class SignupView(CreateView):
     form_class = UserCreationForm
     template_name = 'home/register.html'
@@ -24,17 +27,21 @@ class SignupView(CreateView):
         user = form.save()               # create the user
         login(self.request, user)        # log them in
         return redirect(self.success_url)
-    
+
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginInterfaceView(LoginView):
     template_name = 'home/login.html'
-    
+
+@method_decorator(csrf_exempt, name='dispatch')
 class LogoutInterfaceView(LogoutView):
     template_name = 'home/logout.html'
 
+@method_decorator(csrf_exempt, name='dispatch')
 class HomeView(TemplateView):
     template_name = "home/welcome.html"
     extra_context = {'now': datetime.today()}
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AuthorizedView(LoginRequiredMixin, TemplateView):
     template_name = 'home/authorized.html'
     login_url = '/admin'
